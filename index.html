@@ -10,16 +10,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts Outfit -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+          },
           colors: {
-            legalDark: '#0B0F19',
-            legalPanel: '#111827',
-            legalRed: '#EF4444',
-            legalRedHover: '#DC2626',
+            legalDark: '#080C14',
+            legalPanel: '#0F172A',
+            legalBlue: '#3B82F6',
+            legalTeal: '#0D9488',
+            legalEmerald: '#10B981',
             legalAccent: '#F3F4F6',
           }
         }
@@ -33,14 +40,14 @@
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #111827;
+      background: #0F172A;
     }
     ::-webkit-scrollbar-thumb {
-      background: #374151;
+      background: #334155;
       border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #EF4444;
+      background: #0D9488;
     }
     /* Mindmap styling */
     .node-text {
@@ -50,7 +57,7 @@
     }
     .node-subtext {
       font-size: 9px;
-      fill: #9CA3AF;
+      fill: #94A3B8;
     }
     /* Typing indicator animation */
     .dot-flashing {
@@ -58,8 +65,8 @@
       width: 6px;
       height: 6px;
       border-radius: 5px;
-      background-color: #EF4444;
-      color: #EF4444;
+      background-color: #3B82F6;
+      color: #3B82F6;
       animation: dot-flashing 1s infinite linear alternate;
       animation-delay: 0.5s;
     }
@@ -74,8 +81,8 @@
       width: 6px;
       height: 6px;
       border-radius: 5px;
-      background-color: #EF4444;
-      color: #EF4444;
+      background-color: #3B82F6;
+      color: #3B82F6;
       animation: dot-flashing 1s infinite alternate;
       animation-delay: 0s;
     }
@@ -84,59 +91,43 @@
       width: 6px;
       height: 6px;
       border-radius: 5px;
-      background-color: #EF4444;
-      color: #EF4444;
+      background-color: #3B82F6;
+      color: #3B82F6;
       animation: dot-flashing 1s infinite alternate;
       animation-delay: 1s;
     }
     @keyframes dot-flashing {
-      0% { background-color: #EF4444; }
-      50%, 100% { background-color: rgba(239, 68, 68, 0.2); }
+      0% { background-color: #3B82F6; }
+      50%, 100% { background-color: rgba(59, 130, 246, 0.2); }
     }
   </style>
 </head>
-<body class="bg-legalDark text-gray-100 font-sans min-h-screen flex flex-col overflow-hidden">
+<body class="bg-legalDark text-slate-100 font-sans min-h-screen flex flex-col overflow-hidden">
 
   <!-- TOP HEADER -->
-  <header class="bg-legalPanel border-b border-gray-800 px-6 py-4 flex items-center justify-between z-10">
+  <header class="bg-legalPanel border-b border-slate-800 px-6 py-4 flex items-center justify-between z-10">
     <div class="flex items-center gap-3">
-      <div class="bg-gradient-to-br from-red-600 to-red-900 text-white p-2.5 rounded-lg shadow-lg border border-red-500/30">
+      <div class="bg-gradient-to-br from-blue-600 to-teal-600 text-white p-2.5 rounded-lg shadow-lg border border-teal-500/30">
         <i class="fa-solid fa-eye text-xl animate-pulse"></i>
       </div>
       <div>
         <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-          LegalEye <span class="text-red-500 text-sm font-semibold px-2 py-0.5 bg-red-500/10 rounded-full border border-red-500/20">AI</span>
+          LegalEye <span class="text-teal-400 text-sm font-semibold px-2 py-0.5 bg-teal-500/10 rounded-full border border-teal-500/20">AI</span>
         </h1>
-        <p class="text-xs text-gray-400">Senior Legal AI Assistant & Mind Map Risk Analyzer</p>
+        <p class="text-xs text-slate-400">Senior Legal AI Assistant & Mind Map Risk Analyzer</p>
       </div>
     </div>
 
-    <!-- API configuration tools -->
-    <div class="flex items-center gap-4 bg-legalDark/80 p-2 rounded-xl border border-gray-800">
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-400 font-medium">Gemini API Key:</span>
-        <div class="relative">
-          <input 
-            type="password" 
-            id="apiKeyInput" 
-            placeholder="AIzaSy..." 
-            class="bg-legalPanel border border-gray-700 text-xs text-gray-100 rounded px-3 py-1.5 pr-8 focus:outline-none focus:border-red-500 w-48 transition-colors"
-          />
-          <button id="toggleApiVisibility" class="absolute right-2 top-2 text-gray-500 hover:text-gray-300">
-            <i class="fa-solid fa-eye-slash text-xs"></i>
-          </button>
-        </div>
-      </div>
-      <button 
-        id="testKeyBtn" 
-        class="bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded transition-all active:scale-95"
-      >
-        Connect
-      </button>
-      <div class="flex items-center gap-1.5 pl-2 border-l border-gray-800">
-        <span id="apiStatusDot" class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] transition-all duration-300"></span>
-        <span id="apiStatusText" class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Connected</span>
-      </div>
+    <!-- Center active count -->
+    <div class="hidden md:flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-4 py-2 rounded-xl text-xs font-semibold text-slate-400">
+      <i class="fa-solid fa-folder-open text-teal-400"></i>
+      <span>Active Files:</span>
+      <span id="headerFileCount" class="text-white">0 / 3</span>
+    </div>
+
+    <div class="flex items-center gap-1.5 bg-slate-900/40 px-3 py-1.5 rounded-lg border border-slate-800/60">
+      <span class="w-2 h-2 rounded-full bg-teal-500"></span>
+      <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Sandbox Secure</span>
     </div>
   </header>
 
@@ -144,208 +135,217 @@
   <div class="flex-1 flex overflow-hidden">
     
     <!-- LEFT SIDEBAR: ACTIONS & CONTROL PANEL -->
-    <aside class="w-80 bg-legalPanel border-r border-gray-800 flex flex-col justify-between overflow-y-auto">
+    <aside class="w-80 bg-legalPanel border-r border-slate-800 flex flex-col justify-between overflow-y-auto">
       <div class="p-4 space-y-6">
+        
         <!-- Document Upload Box -->
-        <div>
-          <label class="block text-xs font-semibold uppercase text-gray-400 tracking-wider mb-2">Upload Contract (PDF)</label>
+        <div class="space-y-3">
+          <label class="block text-xs font-semibold uppercase text-slate-400 tracking-wider">Upload Contracts (PDF)</label>
           <div 
             id="dropzone" 
-            class="border-2 border-dashed border-gray-700 hover:border-red-500/50 rounded-xl p-6 text-center cursor-pointer transition-all bg-legalDark/40 flex flex-col items-center justify-center gap-2 group"
+            class="border-2 border-dashed border-slate-700 hover:border-teal-500/50 rounded-xl p-5 text-center cursor-pointer transition-all bg-legalDark/40 flex flex-col items-center justify-center gap-2 group"
           >
             <input type="file" id="pdfFileInput" accept="application/pdf" class="hidden" />
-            <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform">
-              <i class="fa-solid fa-file-contract text-lg"></i>
+            <div class="w-10 h-10 rounded-full bg-teal-500/10 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-file-signature text-base"></i>
             </div>
-            <div class="space-y-1">
-              <p class="text-sm font-semibold text-gray-200">Drag & drop contract</p>
-              <p class="text-xs text-gray-500">or click to browse local PDF</p>
+            <div class="space-y-0.5">
+              <p class="text-xs font-semibold text-slate-200">Drag & drop contract PDF</p>
+              <p class="text-[10px] text-slate-500">Supports up to 3 documents</p>
             </div>
           </div>
-          <div id="loadedFileInfo" class="mt-3 hidden bg-gray-900/60 p-2.5 rounded-lg border border-gray-800 flex items-center justify-between">
-            <div class="flex items-center gap-2 overflow-hidden mr-1">
-              <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
-              <span id="fileName" class="text-xs font-semibold text-gray-300 truncate">contract.pdf</span>
+          
+          <!-- Uploaded Files List -->
+          <div id="uploadedFilesSection" class="hidden space-y-2 pt-1 border-t border-slate-800/60">
+            <div class="flex items-center justify-between">
+              <label class="block text-[10px] font-bold uppercase text-slate-500 tracking-wider">Uploaded Files</label>
+              <span id="fileCountBadge" class="text-[9px] font-extrabold bg-teal-950 text-teal-400 border border-teal-800/40 px-1.5 py-0.5 rounded">0 / 3</span>
             </div>
-            <span id="pageCountBadge" class="text-[10px] font-bold bg-gray-800 text-gray-400 px-2 py-0.5 rounded shrink-0">0 pages</span>
+            <div id="uploadedFilesList" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+              <!-- Rendered dynamically -->
+            </div>
           </div>
         </div>
 
         <!-- Agentic Quick Actions -->
         <div class="space-y-3">
-          <label class="block text-xs font-semibold uppercase text-gray-400 tracking-wider">Quick Risk Actions</label>
-          <p class="text-[11px] text-gray-500 -mt-1 leading-relaxed">Runs predefined senior agentic queries analyzing compliance, issues & core targets.</p>
+          <label class="block text-xs font-semibold uppercase text-slate-400 tracking-wider">Quick Actions</label>
           
           <button 
             data-action="redflags" 
-            class="quick-action-btn w-full bg-gray-800/60 hover:bg-red-500/15 hover:border-red-500/50 border border-gray-700 text-gray-200 hover:text-red-400 text-xs font-semibold py-3 px-4 rounded-xl flex items-center gap-3 transition-all text-left shadow-sm group"
+            class="quick-action-btn w-full bg-slate-900/60 hover:bg-teal-500/10 hover:border-teal-500/40 border border-slate-800 text-slate-200 hover:text-teal-400 text-xs font-semibold py-2.5 px-3 rounded-xl flex items-center gap-3 transition-all text-left group"
           >
-            <div class="w-7 h-7 bg-red-500/10 rounded-lg flex items-center justify-center text-red-500 group-hover:bg-red-500/20 shrink-0">
-              <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="w-7 h-7 bg-teal-500/10 rounded-lg flex items-center justify-center text-teal-400 group-hover:bg-teal-500/20 shrink-0">
+              <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
             </div>
             <div class="truncate">
-              <p class="font-bold">Highlight Red Flags</p>
-              <p class="text-[10px] text-gray-500 group-hover:text-red-400/80">Expose liabilities & risk exposure</p>
+              <p class="font-bold text-xs">Summarize Risks</p>
+              <p class="text-[9px] text-slate-500 group-hover:text-teal-400/80">Expose liabilities & exposure</p>
             </div>
           </button>
 
           <button 
             data-action="obligations" 
-            class="quick-action-btn w-full bg-gray-800/60 hover:bg-red-500/15 hover:border-red-500/50 border border-gray-700 text-gray-200 hover:text-red-400 text-xs font-semibold py-3 px-4 rounded-xl flex items-center gap-3 transition-all text-left shadow-sm group"
+            class="quick-action-btn w-full bg-slate-900/60 hover:bg-teal-500/10 hover:border-teal-500/40 border border-slate-800 text-slate-200 hover:text-teal-400 text-xs font-semibold py-2.5 px-3 rounded-xl flex items-center gap-3 transition-all text-left group"
           >
-            <div class="w-7 h-7 bg-red-500/10 rounded-lg flex items-center justify-center text-red-500 group-hover:bg-red-500/20 shrink-0">
-              <i class="fa-solid fa-list-check"></i>
+            <div class="w-7 h-7 bg-teal-500/10 rounded-lg flex items-center justify-center text-teal-400 group-hover:bg-teal-500/20 shrink-0">
+              <i class="fa-solid fa-calendar-days text-teal-400"></i>
             </div>
             <div class="truncate">
-              <p class="font-bold">Summarize Obligations</p>
-              <p class="text-[10px] text-gray-500 group-hover:text-red-400/80">List major deadlines & terms</p>
+              <p class="font-bold text-xs">List Key Dates</p>
+              <p class="text-[9px] text-slate-500 group-hover:text-teal-400/80">Extract deadlines & renewals</p>
             </div>
           </button>
 
           <button 
             data-action="jargon" 
-            class="quick-action-btn w-full bg-gray-800/60 hover:bg-red-500/15 hover:border-red-500/50 border border-gray-700 text-gray-200 hover:text-red-400 text-xs font-semibold py-3 px-4 rounded-xl flex items-center gap-3 transition-all text-left shadow-sm group"
+            class="quick-action-btn w-full bg-slate-900/60 hover:bg-teal-500/10 hover:border-teal-500/40 border border-slate-800 text-slate-200 hover:text-teal-400 text-xs font-semibold py-2.5 px-3 rounded-xl flex items-center gap-3 transition-all text-left group"
           >
-            <div class="w-7 h-7 bg-red-500/10 rounded-lg flex items-center justify-center text-red-500 group-hover:bg-red-500/20 shrink-0">
-              <i class="fa-solid fa-scale-balanced"></i>
+            <div class="w-7 h-7 bg-teal-500/10 rounded-lg flex items-center justify-center text-teal-400 group-hover:bg-teal-500/20 shrink-0">
+              <i class="fa-solid fa-scale-balanced text-blue-400"></i>
             </div>
             <div class="truncate">
-              <p class="font-bold">Simplify Jargon</p>
-              <p class="text-[10px] text-gray-500 group-hover:text-red-400/80">Translate text into lay terms</p>
-            </div>
-          </button>
-
-          <!-- NEW ACTION: DRAFT REMEDIATION -->
-          <button 
-            data-action="remediation" 
-            class="quick-action-btn w-full bg-gray-800/60 hover:bg-red-500/15 hover:border-red-500/50 border border-gray-700 text-gray-200 hover:text-red-400 text-xs font-semibold py-3 px-4 rounded-xl flex items-center gap-3 transition-all text-left shadow-sm group"
-          >
-            <div class="w-7 h-7 bg-red-500/10 rounded-lg flex items-center justify-center text-red-500 group-hover:bg-red-500/20 shrink-0">
-              <i class="fa-solid fa-file-pen"></i>
-            </div>
-            <div class="truncate">
-              <p class="font-bold">✨ Draft Remediation</p>
-              <p class="text-[10px] text-gray-500 group-hover:text-red-400/80">Create defensive compromise clauses</p>
-            </div>
-          </button>
-
-          <!-- NEW ACTION: NEGOTIATION PLAYBOOK -->
-          <button 
-            data-action="strategy" 
-            class="quick-action-btn w-full bg-gray-800/60 hover:bg-red-500/15 hover:border-red-500/50 border border-gray-700 text-gray-200 hover:text-red-400 text-xs font-semibold py-3 px-4 rounded-xl flex items-center gap-3 transition-all text-left shadow-sm group"
-          >
-            <div class="w-7 h-7 bg-red-500/10 rounded-lg flex items-center justify-center text-red-500 group-hover:bg-red-500/20 shrink-0">
-              <i class="fa-solid fa-chess-knight"></i>
-            </div>
-            <div class="truncate">
-              <p class="font-bold">✨ Negotiation Battlebook</p>
-              <p class="text-[10px] text-gray-500 group-hover:text-red-400/80">Generate strategic pushback tactics</p>
+              <p class="font-bold text-xs">Explain in Layman Terms</p>
+              <p class="text-[9px] text-slate-500 group-hover:text-teal-400/80">Translate legal jargon to business</p>
             </div>
           </button>
         </div>
 
         <!-- Risk Mind Map Trigger -->
-        <div class="pt-4 border-t border-gray-800">
+        <div class="pt-4 border-t border-slate-800">
           <button 
             id="generateRiskMapBtn"
-            class="w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-lg hover:shadow-red-900/30 active:scale-[0.98]"
+            class="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-500 hover:to-teal-500 text-white text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-lg hover:shadow-teal-900/20 active:scale-[0.98]"
           >
             <i class="fa-solid fa-diagram-project text-sm"></i>
             Generate Interactive Risk Map
           </button>
-          <p class="text-[10px] text-gray-500 mt-2 text-center leading-relaxed">Extracts structured data (Parties, Liabilities, Dates) into an interactive visualization.</p>
+          <p class="text-[10px] text-slate-500 mt-2 text-center leading-relaxed">Extracts contracting parties, liabilities & dates into a dynamic concept chart.</p>
         </div>
       </div>
 
       <!-- Footer Info -->
-      <div class="p-4 border-t border-gray-800 bg-legalDark/30 text-[11px] text-gray-500 flex justify-between items-center">
-        <span>System Version: v1.5-Flash</span>
-        <span class="flex items-center gap-1"><i class="fa-solid fa-shield text-red-500/70"></i> Sandbox Secure</span>
+      <div class="p-4 border-t border-slate-800 bg-legalDark/30 text-[10px] text-slate-500 flex justify-between items-center">
+        <span>Engine: Gemini 2.5 Flash</span>
+        <span class="flex items-center gap-1"><i class="fa-solid fa-shield text-teal-500/70"></i> Client-Side Sandbox</span>
       </div>
     </aside>
 
-    <!-- CENTER VIEW: DUAL VIEW (PDF VIEWER / MIND MAP CANVAS) -->
+    <!-- CENTER VIEW: DUAL VIEW (PDF VIEWER / MIND MAP CANVAS / PRESENTATION SLIDE VIEWER) -->
     <main class="flex-1 bg-legalDark flex flex-col overflow-hidden relative">
       
       <!-- Top Switchbar / State Display -->
-      <div class="bg-legalPanel border-b border-gray-800 px-6 py-3 flex items-center justify-between">
+      <div class="bg-legalPanel border-b border-slate-800 px-6 py-3 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <span class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Active Workspace:</span>
-          <span id="workspaceBadge" class="text-xs font-extrabold text-white bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full flex items-center gap-2">
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest">Active Workspace:</span>
+          <span id="workspaceBadge" class="text-xs font-extrabold text-white bg-teal-500/10 border border-teal-500/30 px-3 py-1 rounded-full flex items-center gap-2">
             <i class="fa-solid fa-file-pdf"></i> PDF Live Document
           </span>
         </div>
         <div class="flex items-center gap-2">
-          <!-- Back to PDF Button (Only visible on Risk Map view) -->
+          <!-- Back to PDF Button (Only visible on Risk Map / Presentation view) -->
           <button 
             id="backToPdfBtn" 
-            class="hidden bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold px-3 py-1.5 rounded-lg border border-gray-700 items-center gap-1.5 transition-all"
+            class="hidden bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded-lg border border-slate-700 items-center gap-1.5 transition-all"
           >
             <i class="fa-solid fa-arrow-left"></i> Back to PDF View
           </button>
           <!-- Navigation Controls for PDF -->
           <div id="pdfControls" class="flex items-center gap-2">
-            <button id="prevPageBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-200 p-1.5 rounded-lg border border-gray-700 transition-colors disabled:opacity-40" disabled>
+            <button id="prevPageBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 p-1.5 rounded-lg border border-slate-700 transition-colors disabled:opacity-40" disabled>
               <i class="fa-solid fa-chevron-left text-xs"></i>
             </button>
-            <span id="pageProgress" class="text-xs text-gray-300 font-semibold px-2">Page 0 / 0</span>
-            <button id="nextPageBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-200 p-1.5 rounded-lg border border-gray-700 transition-colors disabled:opacity-40" disabled>
+            <span id="pageProgress" class="text-xs text-slate-300 font-semibold px-2">Page 0 / 0</span>
+            <button id="nextPageBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 p-1.5 rounded-lg border border-slate-700 transition-colors disabled:opacity-40" disabled>
               <i class="fa-solid fa-chevron-right text-xs"></i>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- MAIN CONTAINER HOLDING VIEWER OR GRAPH -->
+      <!-- MAIN CONTAINER HOLDING VIEWER OR GRAPH OR SLIDES -->
       <div class="flex-1 relative overflow-hidden flex items-center justify-center p-4">
         
         <!-- Welcome Overlay when no PDF uploaded -->
         <div id="welcomePlaceholder" class="absolute inset-0 bg-legalDark flex flex-col items-center justify-center text-center p-8 z-20">
-          <div class="w-20 h-20 bg-red-500/5 border border-red-500/20 rounded-2xl flex items-center justify-center text-red-500 text-3xl mb-4 shadow-[0_0_20px_rgba(239,68,68,0.1)]">
+          <div class="w-20 h-20 bg-teal-500/5 border border-teal-500/20 rounded-2xl flex items-center justify-center text-teal-400 text-3xl mb-4 shadow-[0_0_20px_rgba(13,148,136,0.1)]">
             <i class="fa-solid fa-scale-unbalanced-flip"></i>
           </div>
-          <h3 class="text-xl font-bold text-gray-100">Welcome to LegalEye AI</h3>
-          <p class="text-sm text-gray-400 mt-2 max-w-md leading-relaxed">
-            Upload any contract in PDF format to start scanning for liabilities, obligations, and risk items. Test your Gemini API key in the header to activate agentic responses.
+          <h3 class="text-xl font-bold text-slate-100">Welcome to LegalEye AI</h3>
+          <p class="text-sm text-slate-400 mt-2 max-w-md leading-relaxed">
+            Upload up to 3 contracts in PDF format to start scanning for liabilities, obligations, and risk items. Set your Gemini API key in the chat header to activate agentic analysis.
           </p>
           <div class="mt-6 flex gap-3">
-            <button onclick="document.getElementById('pdfFileInput').click();" class="bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-5 py-2.5 rounded-lg transition-all active:scale-95 shadow-md shadow-red-500/15">
-              <i class="fa-solid fa-upload mr-2"></i> Browse Sample PDF
+            <button onclick="document.getElementById('pdfFileInput').click();" class="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white text-xs font-bold px-5 py-2.5 rounded-lg transition-all active:scale-95 shadow-md shadow-teal-500/10">
+              <i class="fa-solid fa-upload mr-2"></i> Browse local PDF
             </button>
           </div>
         </div>
 
         <!-- VIEW 1: RENDERED PDF CANVAS WRAPPER -->
-        <div id="pdfViewerContainer" class="w-full h-full overflow-auto flex justify-center bg-legalDark/35 rounded-xl border border-gray-800 p-4 hidden">
+        <div id="pdfViewerContainer" class="w-full h-full overflow-auto flex justify-center bg-slate-950/40 rounded-xl border border-slate-800 p-4 hidden">
           <div class="relative shadow-2xl rounded bg-white">
             <canvas id="pdfRenderCanvas" class="max-w-full h-auto rounded"></canvas>
             <div id="pdfLoadingSpinner" class="absolute inset-0 bg-legalPanel/80 flex items-center justify-center text-white hidden">
               <div class="flex flex-col items-center gap-3">
-                <i class="fa-solid fa-circle-notch animate-spin text-3xl text-red-500"></i>
-                <p class="text-xs text-gray-300 font-semibold tracking-wider">Rendering page...</p>
+                <i class="fa-solid fa-circle-notch animate-spin text-3xl text-teal-500"></i>
+                <p class="text-xs text-slate-300 font-semibold tracking-wider">Rendering page...</p>
               </div>
             </div>
           </div>
         </div>
 
         <!-- VIEW 2: RISK MAP INTERACTIVE CANVAS -->
-        <div id="riskMapContainer" class="w-full h-full hidden flex-col relative rounded-xl border border-gray-800 bg-legalPanel/50 p-4">
+        <div id="riskMapContainer" class="w-full h-full hidden flex-col relative rounded-xl border border-slate-800 bg-slate-950/50 p-4">
           
           <!-- Control Overlay (Zoom & Instructions) -->
           <div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
-            <div class="bg-legalDark/90 border border-gray-700 p-2.5 rounded-lg flex items-center gap-2 shadow-lg">
-              <button id="zoomInBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs px-2.5 py-1.5 rounded font-bold"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-              <button id="zoomOutBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs px-2.5 py-1.5 rounded font-bold"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-              <button id="resetZoomBtn" class="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs px-2.5 py-1.5 rounded font-bold">Reset</button>
+            <div class="bg-slate-900/90 border border-slate-700 p-2 rounded-lg flex items-center gap-2 shadow-lg">
+              <button id="zoomInBtn" class="bg-slate-800 hover:bg-slate-750 text-slate-200 text-xs px-2.5 py-1.5 rounded font-bold"><i class="fa-solid fa-magnifying-glass-plus text-[10px]"></i></button>
+              <button id="zoomOutBtn" class="bg-slate-800 hover:bg-slate-750 text-slate-200 text-xs px-2.5 py-1.5 rounded font-bold"><i class="fa-solid fa-magnifying-glass-minus text-[10px]"></i></button>
+              <button id="resetZoomBtn" class="bg-slate-800 hover:bg-slate-750 text-slate-200 text-xs px-2.5 py-1.5 rounded font-bold text-[10px]">Reset</button>
             </div>
-            <p class="text-[10px] text-gray-400"><i class="fa-solid fa-hand-pointer text-red-500"></i> Drag & Pan any part of the canvas</p>
+            <p class="text-[9px] text-slate-400"><i class="fa-solid fa-hand-pointer text-teal-400 mr-1"></i> Pan: Drag canvas. Select: Click node.</p>
           </div>
 
           <!-- Dynamic SVG canvas container -->
           <div id="svgCanvasWrapper" class="flex-1 w-full h-full cursor-grab active:cursor-grabbing overflow-hidden relative">
-            <!-- Mind map content will be generated here dynamically -->
+            <!-- Mind map content generated dynamically -->
           </div>
 
+        </div>
+
+        <!-- VIEW 3: DYNAMIC PRESENTATION SLIDES VIEW -->
+        <div id="presentationContainer" class="w-full h-full hidden flex-col justify-between relative rounded-xl border border-slate-800 bg-slate-950/50 p-6">
+          <!-- Slide header / controls -->
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-person-chalkboard text-teal-400"></i>
+              <h3 class="text-sm font-bold text-slate-200">Interactive Slide Deck Presentation</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="prevSlideBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition-colors disabled:opacity-40" disabled>
+                <i class="fa-solid fa-chevron-left mr-1"></i> Prev
+              </button>
+              <span id="slideProgress" class="text-xs text-slate-400 font-semibold px-2">Slide 0 of 0</span>
+              <button id="nextSlideBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition-colors disabled:opacity-40" disabled>
+                Next <i class="fa-solid fa-chevron-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Slide content body -->
+          <div id="slideContentWrapper" class="flex-1 flex flex-col justify-center items-center py-6 px-4 text-center max-w-2xl mx-auto space-y-6">
+            <h2 id="slideTitle" class="text-xl font-bold text-white tracking-tight bg-gradient-to-r from-blue-400 to-teal-300 bg-clip-text text-transparent"></h2>
+            <ul id="slideBullets" class="text-left text-xs text-slate-400 space-y-3.5 max-w-lg mx-auto">
+              <!-- Rendered dynamically -->
+            </ul>
+          </div>
+          
+          <!-- Slide footer -->
+          <div class="text-[9px] text-slate-500 text-center border-t border-slate-800 pt-3">
+            LegalEye AI Presentation Module • Press slide buttons to navigate
+          </div>
         </div>
 
       </div>
@@ -353,38 +353,60 @@
     </main>
 
     <!-- RIGHT SIDEBAR: AI CHAT INTERFACE & THOUGHT PROCESS -->
-    <aside class="w-96 bg-legalPanel border-l border-gray-800 flex flex-col justify-between overflow-hidden">
+    <aside class="w-96 bg-legalPanel border-l border-slate-800 flex flex-col justify-between overflow-hidden">
       
-      <!-- Top Title Bar -->
-      <div class="p-4 border-b border-gray-800 bg-legalDark/45 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-          <h2 class="text-sm font-bold text-gray-100">Senior Legal Assistant Chat</h2>
+      <!-- Top Title Bar with Integrated API Key Config -->
+      <div class="p-3 border-b border-slate-800 bg-legalDark/60 flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span id="chatStatusDot" class="w-2.5 h-2.5 rounded-full bg-slate-500 animate-pulse"></span>
+            <h2 class="text-xs font-bold text-slate-200 tracking-wide uppercase">Legal Counsel Chat</h2>
+          </div>
+          <button id="clearChatBtn" class="text-slate-500 hover:text-teal-400 text-[10px] font-semibold px-2 py-0.5 rounded hover:bg-slate-800 transition-all flex items-center gap-1">
+            <i class="fa-solid fa-trash-can"></i> Clear
+          </button>
         </div>
-        <button id="clearChatBtn" class="text-gray-500 hover:text-red-400 text-xs font-semibold px-2 py-1 rounded hover:bg-gray-800 transition-all flex items-center gap-1">
-          <i class="fa-solid fa-trash-can"></i> Clear
-        </button>
+        
+        <!-- Gemini API Key connection inputs -->
+        <div class="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800">
+          <span class="text-[10px] text-slate-400 font-bold shrink-0">API Key:</span>
+          <div class="relative flex-1">
+            <input 
+              type="password" 
+              id="apiKeyInput" 
+              placeholder="AIzaSy..." 
+              class="bg-slate-900 border border-slate-700 text-[10px] text-slate-100 rounded px-2 py-1.5 pr-6 focus:outline-none focus:border-teal-500 w-full transition-colors"
+            />
+            <button id="toggleApiVisibility" class="absolute right-1.5 top-1.5 text-slate-500 hover:text-slate-300 font-normal">
+              <i class="fa-solid fa-eye-slash text-[10px]"></i>
+            </button>
+          </div>
+          <button id="testKeyBtn" class="bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded transition-all active:scale-95 shrink-0">
+            Connect
+          </button>
+          <span id="apiStatusDot" class="w-2.5 h-2.5 rounded-full bg-red-500 shrink-0 transition-all duration-300"></span>
+        </div>
       </div>
 
       <!-- Chat Output Area -->
       <div id="chatMessageFlow" class="flex-1 overflow-y-auto p-4 space-y-4">
         <!-- AI Welcome Message -->
         <div class="flex items-start gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500 shrink-0">
+          <div class="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shrink-0">
             <i class="fa-solid fa-user-shield text-sm"></i>
           </div>
           <div class="space-y-1">
             <div class="flex items-center gap-1.5">
               <span class="text-xs font-extrabold text-white">LEGALEYE AGENT</span>
-              <span class="text-[9px] font-bold tracking-wider px-1 bg-red-500/20 text-red-400 rounded">SENIOR</span>
+              <span class="text-[9px] font-bold tracking-wider px-1.5 py-0.5 bg-teal-500/20 text-teal-400 rounded uppercase">Counsel</span>
             </div>
-            <div class="bg-legalDark/80 p-3 rounded-2xl rounded-tl-none border border-gray-800 text-xs text-gray-300 leading-relaxed space-y-2">
-              <p>Welcome to LegalEye AI. I will analyze your documents as an executive Legal Counsel.</p>
-              <p class="text-red-400/90 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Pre-flight Guardrail Checklist:</p>
-              <ul class="list-disc pl-4 space-y-1 text-gray-400 text-[11px]">
-                <li>Zero hallucinations framework enabled</li>
-                <li>Strict document context enforcement</li>
-                <li>Verified page/section citation format [Page X, Section Y]</li>
+            <div class="bg-legalDark/80 p-3 rounded-2xl rounded-tl-none border border-slate-800 text-xs text-slate-300 leading-relaxed space-y-2">
+              <p>Welcome to LegalEye AI. I act strictly as a Senior Legal Assistant (Executive Legal Counsel).</p>
+              <p class="text-teal-400 font-semibold"><i class="fa-solid fa-shield-halved mr-1"></i> Contract Verification Guardrails:</p>
+              <ul class="list-disc pl-4 space-y-1 text-slate-400 text-[10px]">
+                <li>Zero-hallucination document matching.</li>
+                <li>Polite rejection of unrelated off-topic chats.</li>
+                <li>Page and Section citations verified.</li>
               </ul>
             </div>
           </div>
@@ -392,41 +414,54 @@
       </div>
 
       <!-- Live Agent Thought Process Bubble (Hidden by default) -->
-      <div id="thoughtProcessBubble" class="hidden px-4 py-2 border-t border-gray-800 bg-gray-950/70">
+      <div id="thoughtProcessBubble" class="hidden px-4 py-2 border-t border-slate-800 bg-slate-950/70">
         <div class="flex items-start gap-2.5">
-          <div class="w-6 h-6 bg-red-500/10 rounded border border-red-500/20 flex items-center justify-center shrink-0">
-            <i class="fa-solid fa-brain text-red-400 text-xs animate-pulse"></i>
+          <div class="w-6 h-6 bg-teal-500/10 rounded border border-teal-500/20 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-brain text-teal-400 text-xs animate-pulse"></i>
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Agent Reasoning Engine</span>
+              <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest">Agent Reasoning Engine</span>
               <div class="dot-flashing mr-3 mt-1"></div>
             </div>
-            <p id="thoughtProcessText" class="text-[11px] text-gray-400 italic mt-1 leading-normal truncate">Evaluating clause references and verifying citations...</p>
+            <p id="thoughtProcessText" class="text-[10px] text-slate-400 italic mt-0.5 leading-normal truncate">Evaluating clause references and verifying citations...</p>
           </div>
         </div>
       </div>
 
+      <!-- Chat Quick Action Buttons (Pill buttons just above input field) -->
+      <div class="px-3 py-1 bg-legalDark/60 flex flex-wrap gap-1.5 border-t border-slate-800 justify-center">
+        <button data-pill="redflags" class="chat-pill-btn bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 font-semibold px-2.5 py-1 rounded-full border border-slate-800 hover:border-teal-500/40 hover:text-teal-400 transition-all flex items-center gap-1 shrink-0">
+          <i class="fa-solid fa-triangle-exclamation text-amber-500 text-[9px]"></i> Summarize Risks
+        </button>
+        <button data-pill="obligations" class="chat-pill-btn bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 font-semibold px-2.5 py-1 rounded-full border border-slate-800 hover:border-teal-500/40 hover:text-teal-400 transition-all flex items-center gap-1 shrink-0">
+          <i class="fa-solid fa-calendar-days text-teal-400 text-[9px]"></i> List Key Dates
+        </button>
+        <button data-pill="jargon" class="chat-pill-btn bg-slate-900 hover:bg-slate-800 text-[10px] text-slate-300 font-semibold px-2.5 py-1 rounded-full border border-slate-800 hover:border-teal-500/40 hover:text-teal-400 transition-all flex items-center gap-1 shrink-0">
+          <i class="fa-solid fa-scale-balanced text-blue-400 text-[9px]"></i> Explain Jargon
+        </button>
+      </div>
+
       <!-- Chat Input Area -->
-      <div class="p-3 bg-legalDark border-t border-gray-800">
+      <div class="p-3 bg-legalDark border-t border-slate-800">
         <form id="chatForm" class="relative flex items-center">
           <input 
             type="text" 
             id="chatInput" 
-            placeholder="Ask about liabilities, termination, dates..." 
-            class="w-full bg-legalPanel border border-gray-800 text-xs rounded-xl pl-4 pr-12 py-3.5 focus:outline-none focus:border-red-500 text-gray-100 shadow-inner"
+            placeholder="Ask about liabilities, terms, dates..." 
+            class="w-full bg-slate-900 border border-slate-800 text-xs rounded-xl pl-4 pr-12 py-3.5 focus:outline-none focus:border-teal-500 text-slate-100 shadow-inner"
             disabled
           />
           <button 
             type="submit" 
             id="sendChatBtn" 
-            class="absolute right-2 top-2 w-9 h-9 bg-red-500 hover:bg-red-600 disabled:bg-gray-800 text-white disabled:text-gray-600 rounded-lg flex items-center justify-center transition-all shadow-md active:scale-95 shrink-0"
+            class="absolute right-2 top-2 w-9 h-9 bg-teal-600 hover:bg-teal-500 disabled:bg-slate-800 text-white disabled:text-slate-600 rounded-lg flex items-center justify-center transition-all shadow-md active:scale-95 shrink-0"
             disabled
           >
             <i class="fa-solid fa-paper-plane text-xs"></i>
           </button>
         </form>
-        <p class="text-[9px] text-gray-500 mt-1.5 text-center"><i class="fa-solid fa-lock text-red-500/70 mr-0.5"></i> End-to-end sandbox. Content is analyzed client-side via Google Gemini models.</p>
+        <p class="text-[8px] text-slate-500 mt-1.5 text-center"><i class="fa-solid fa-lock text-teal-500/70 mr-0.5"></i> All processes run client-side. Key saved locally in encrypted sandbox.</p>
       </div>
 
     </aside>
@@ -435,33 +470,35 @@
 
   <!-- Notification Popup/Message Box -->
   <div id="toastMessage" class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="bg-gray-900 border border-red-500/50 text-gray-100 p-4 rounded-xl shadow-2xl flex items-center gap-3 max-w-md">
-      <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center text-red-500 shrink-0 bg-red-500/10">
+    <div class="bg-slate-900 border border-teal-500/30 text-slate-100 p-4 rounded-xl shadow-2xl flex items-center gap-3 max-w-md">
+      <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center text-teal-400 shrink-0 bg-teal-500/10">
         <i class="fa-solid fa-circle-info"></i>
       </div>
       <div>
         <h4 id="toastTitle" class="text-xs font-bold text-white">Notice</h4>
-        <p id="toastBody" class="text-xs text-gray-400 mt-0.5 leading-normal">Something needs attention.</p>
+        <p id="toastBody" class="text-xs text-slate-400 mt-0.5 leading-normal">Something needs attention.</p>
       </div>
-      <button onclick="hideToast()" class="text-gray-500 hover:text-gray-300 ml-auto pl-2"><i class="fa-solid fa-xmark"></i></button>
+      <button onclick="hideToast()" class="text-slate-500 hover:text-slate-350 ml-auto pl-2"><i class="fa-solid fa-xmark"></i></button>
     </div>
   </div>
 
   <script>
     // --- APP GLOBAL STATE MANAGEMENT ---
     const state = {
-      apiKey: 'AQ.Ab8RN6IzVYmiEBCS3eWqMmViH268TzuYzpwFUHXq4JH1ybN9',
-      isApiConnected: true,
-      pdfDocument: null,
-      pdfTextContent: '', // Complete extracted text per page
-      pdfPagesText: [], // Array indexed by page (0 = Page 1)
-      totalPageCount: 0,
+      apiKey: '',
+      isApiConnected: false,
+      uploadedFiles: [], // Array of { name, pdfDocument, textContent, pagesText, totalPageCount }
+      activeFileIndex: -1,
       currentPageNum: 1,
-      fileName: '',
-      activeView: 'pdf', // 'pdf' or 'mindmap'
-      thoughtInterval: null,
+      totalPageCount: 0,
+      pdfDocument: null,
+      activeView: 'pdf', // 'pdf', 'mindmap', 'presentation'
+      
       mindMapZoom: 1,
-      mindMapPan: { x: 0, y: 0 }
+      mindMapPan: { x: 0, y: 0 },
+      
+      presentationSlides: [],
+      currentSlideNum: 0
     };
 
     // DOM ELEMENTS
@@ -469,12 +506,9 @@
     const toggleApiVisibility = document.getElementById('toggleApiVisibility');
     const testKeyBtn = document.getElementById('testKeyBtn');
     const apiStatusDot = document.getElementById('apiStatusDot');
-    const apiStatusText = document.getElementById('apiStatusText');
+    const chatStatusDot = document.getElementById('chatStatusDot');
     const dropzone = document.getElementById('dropzone');
     const pdfFileInput = document.getElementById('pdfFileInput');
-    const loadedFileInfo = document.getElementById('loadedFileInfo');
-    const fileNameText = document.getElementById('fileName');
-    const pageCountBadge = document.getElementById('pageCountBadge');
     const prevPageBtn = document.getElementById('prevPageBtn');
     const nextPageBtn = document.getElementById('nextPageBtn');
     const pageProgress = document.getElementById('pageProgress');
@@ -482,6 +516,7 @@
     const pdfLoadingSpinner = document.getElementById('pdfLoadingSpinner');
     const pdfViewerContainer = document.getElementById('pdfViewerContainer');
     const riskMapContainer = document.getElementById('riskMapContainer');
+    const presentationContainer = document.getElementById('presentationContainer');
     const welcomePlaceholder = document.getElementById('welcomePlaceholder');
     const workspaceBadge = document.getElementById('workspaceBadge');
     const backToPdfBtn = document.getElementById('backToPdfBtn');
@@ -499,6 +534,17 @@
     const zoomOutBtn = document.getElementById('zoomOutBtn');
     const resetZoomBtn = document.getElementById('resetZoomBtn');
     
+    // Presentation elements
+    const prevSlideBtn = document.getElementById('prevSlideBtn');
+    const nextSlideBtn = document.getElementById('nextSlideBtn');
+    const slideProgress = document.getElementById('slideProgress');
+    const slideTitle = document.getElementById('slideTitle');
+    const slideBullets = document.getElementById('slideBullets');
+    const slideContentWrapper = document.getElementById('slideContentWrapper');
+
+    // Header updates
+    const headerFileCount = document.getElementById('headerFileCount');
+    
     // Toast UI helpers
     const toastMessage = document.getElementById('toastMessage');
     const toastTitle = document.getElementById('toastTitle');
@@ -515,9 +561,9 @@
       toastIcon.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
       
       if (isSuccess) {
-        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-green-500 shrink-0 bg-green-500/10';
+        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-teal-400 shrink-0 bg-teal-500/10';
       } else {
-        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-red-500 shrink-0 bg-red-500/10';
+        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-amber-500 shrink-0 bg-amber-500/10';
       }
 
       toastMessage.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
@@ -533,7 +579,7 @@
       toastMessage.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
     }
 
-    // --- API KEY CONFIGURATION ---
+    // --- API KEY CONFIGURATION & PING CHECK ---
     toggleApiVisibility.addEventListener('click', () => {
       const type = apiKeyInput.getAttribute('type') === 'password' ? 'text' : 'password';
       apiKeyInput.setAttribute('type', type);
@@ -545,36 +591,104 @@
       }
     });
 
+    async function verifyGeminiApiKey(key) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+      const payload = {
+        contents: [{ parts: [{ text: "Ping. Respond with 'pong' only." }] }]
+      };
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (response.ok) {
+          const data = await response.json();
+          return !!data.candidates?.[0]?.content?.parts?.[0]?.text;
+        }
+      } catch (e) {
+        console.error("API verification network fault:", e);
+      }
+      return false;
+    }
+
     // Handle local setup configuration on load
-    window.addEventListener('load', () => {
-      apiKeyInput.value = state.apiKey;
-      apiStatusDot.className = "w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]";
-      apiStatusText.innerText = "Connected";
-      enableChatInterfaceIfReady();
+    window.addEventListener('load', async () => {
+      const savedKey = localStorage.getItem('gemini_api_key');
+      if (savedKey) {
+        apiKeyInput.value = savedKey;
+        // Verify key
+        apiStatusDot.className = "w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse";
+        chatStatusDot.className = "w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse";
+        
+        const isValid = await verifyGeminiApiKey(savedKey);
+        if (isValid) {
+          state.apiKey = savedKey;
+          state.isApiConnected = true;
+          apiStatusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]";
+          chatStatusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.4)]";
+          apiKeyInput.classList.add('border-emerald-500/50', 'bg-emerald-950/10');
+          enableChatInterfaceIfReady();
+        } else {
+          apiStatusDot.className = "w-2.5 h-2.5 rounded-full bg-red-500";
+          chatStatusDot.className = "w-2.5 h-2.5 rounded-full bg-red-500";
+          apiKeyInput.classList.add('border-red-500/40', 'bg-red-950/10');
+        }
+      } else {
+        apiStatusDot.className = "w-2.5 h-2.5 rounded-full bg-slate-500";
+        chatStatusDot.className = "w-2.5 h-2.5 rounded-full bg-slate-500";
+      }
     });
 
-    testKeyBtn.addEventListener('click', () => {
+    testKeyBtn.addEventListener('click', async () => {
       const keyVal = apiKeyInput.value.trim();
       if (!keyVal) {
         showToast("Key Required", "Please enter a valid Google Gemini API key.", "fa-triangle-exclamation");
         return;
       }
-      state.apiKey = keyVal;
-      state.isApiConnected = true;
-      apiStatusDot.className = "w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]";
-      apiStatusText.innerText = "Connected";
-      showToast("Key Connected", "API key configured.", "fa-circle-check", true);
-      enableChatInterfaceIfReady();
+      
+      testKeyBtn.innerText = "Checking...";
+      testKeyBtn.disabled = true;
+      apiStatusDot.className = "w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse";
+      chatStatusDot.className = "w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse";
+      
+      const isValid = await verifyGeminiApiKey(keyVal);
+      testKeyBtn.disabled = false;
+      testKeyBtn.innerText = "Connect";
+      
+      if (isValid) {
+        state.apiKey = keyVal;
+        state.isApiConnected = true;
+        localStorage.setItem('gemini_api_key', keyVal);
+        apiStatusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]";
+        chatStatusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.4)]";
+        apiKeyInput.classList.remove('border-red-500/40', 'bg-red-950/10');
+        apiKeyInput.classList.add('border-emerald-500/50', 'bg-emerald-950/10');
+        showToast("Connected Successfully", "Your Gemini API Key has been verified.", "fa-circle-check", true);
+        enableChatInterfaceIfReady();
+      } else {
+        state.isApiConnected = false;
+        apiStatusDot.className = "w-2.5 h-2.5 rounded-full bg-red-500";
+        chatStatusDot.className = "w-2.5 h-2.5 rounded-full bg-red-500";
+        apiKeyInput.classList.remove('border-emerald-500/50', 'bg-emerald-950/10');
+        apiKeyInput.classList.add('border-red-500/40', 'bg-red-950/10');
+        showToast("Connection Failed", "Invalid API key or model verification failed. Verify key contains 'AIzaSy' and network is online.", "fa-plug-circle-xmark");
+        enableChatInterfaceIfReady();
+      }
     });
 
     function enableChatInterfaceIfReady() {
-      if (state.isApiConnected && state.pdfDocument) {
+      if (state.isApiConnected && state.uploadedFiles.length > 0) {
         chatInput.removeAttribute('disabled');
-        chatInput.placeholder = "Ask senior assistant about this document...";
+        chatInput.placeholder = "Ask senior assistant about contract terms...";
         sendChatBtn.removeAttribute('disabled');
       } else {
         chatInput.setAttribute('disabled', 'true');
-        chatInput.placeholder = "Upload a PDF document to begin chatting...";
+        if (!state.isApiConnected) {
+          chatInput.placeholder = "Link your Gemini API key to start chatting...";
+        } else {
+          chatInput.placeholder = "Upload contract PDFs to begin chatting...";
+        }
         sendChatBtn.setAttribute('disabled', 'true');
       }
     }
@@ -582,16 +696,16 @@
     // --- DRAG AND DROP / FILE SELECT ---
     dropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
-      dropzone.classList.add('border-red-500', 'bg-red-500/5');
+      dropzone.classList.add('border-teal-500', 'bg-teal-500/5');
     });
 
     dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('border-red-500', 'bg-red-500/5');
+      dropzone.classList.remove('border-teal-500', 'bg-teal-500/5');
     });
 
     dropzone.addEventListener('drop', (e) => {
       e.preventDefault();
-      dropzone.classList.remove('border-red-500', 'bg-red-500/5');
+      dropzone.classList.remove('border-teal-500', 'bg-teal-500/5');
       const files = e.dataTransfer.files;
       if (files && files.length > 0) {
         handleFileSelection(files[0]);
@@ -610,68 +724,174 @@
 
     // Load PDF file contents
     async function handleFileSelection(file) {
-      if (file.type !== 'application/pdf') {
-        showToast("Invalid File Type", "Please upload a valid PDF contract file.", "fa-file-excel");
+      if (state.uploadedFiles.length >= 3) {
+        showToast("Maximum Limit Reached", "You can upload up to 3 PDFs. Remove a file to upload another.", "fa-triangle-exclamation");
+        return;
+      }
+      
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        showToast("Unsupported File Type", "Please upload a valid PDF contract file.", "fa-circle-xmark");
         return;
       }
 
-      state.fileName = file.name;
-      fileNameText.innerText = file.name;
-      loadedFileInfo.classList.remove('hidden');
+      welcomePlaceholder.classList.add('hidden');
+      pdfViewerContainer.classList.remove('hidden');
+      pdfLoadingSpinner.classList.remove('hidden');
 
       const fileReader = new FileReader();
+      fileReader.onerror = function() {
+        pdfLoadingSpinner.classList.add('hidden');
+        showToast("File Reading Failed", "An error occurred while reading the file from disk.", "fa-triangle-exclamation");
+        if (state.uploadedFiles.length === 0) {
+          welcomePlaceholder.classList.remove('hidden');
+          pdfViewerContainer.classList.add('hidden');
+        }
+      };
+
       fileReader.onload = async function() {
         const typedarray = new Uint8Array(this.result);
         try {
-          welcomePlaceholder.classList.add('hidden');
-          pdfViewerContainer.classList.remove('hidden');
-          pdfLoadingSpinner.classList.remove('hidden');
-
           const pdf = await pdfjsLib.getDocument({ data: typedarray }).promise;
-          state.pdfDocument = pdf;
-          state.totalPageCount = pdf.numPages;
-          pageCountBadge.innerText = `${pdf.numPages} pages`;
-          state.currentPageNum = 1;
-
-          // Clear existing state texts
-          state.pdfTextContent = '';
-          state.pdfPagesText = [];
-
+          
           // Extract text contents across pages
-          await extractTextFromPdf(pdf);
+          let combinedText = '';
+          const pagesText = [];
           
-          // Render initial page
-          await renderPdfPage(1);
+          for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const textContent = await page.getTextContent();
+            let pageStr = '';
+            textContent.items.forEach(item => {
+              pageStr += item.str + ' ';
+            });
+            pagesText.push({
+              pageIndex: pageNum,
+              text: pageStr
+            });
+            combinedText += `\n[PAGE ${pageNum} START]\n${pageStr}\n[PAGE ${pageNum} END]\n`;
+          }
+
+          const fileObj = {
+            name: file.name,
+            pdfDocument: pdf,
+            textContent: combinedText,
+            pagesText: pagesText,
+            totalPageCount: pdf.numPages
+          };
+
+          state.uploadedFiles.push(fileObj);
           
-          // Toggle UI state
-          enableChatInterfaceIfReady();
-          updateNavigationControls();
-          showToast("Document Loaded", `Successfully parsed text across ${pdf.numPages} pages. Ready to analyze.`, "fa-folder-open", true);
+          // Set as active file
+          selectActiveFile(state.uploadedFiles.length - 1);
+          showToast("Document Loaded", `Successfully parsed "${file.name}" (${pdf.numPages} pages).`, "fa-folder-open", true);
         } catch (err) {
           console.error(err);
-          showToast("PDF Loading Failed", "An error occurred while rendering the PDF.", "fa-triangle-exclamation");
+          showToast("Invalid PDF File", "Could not parse PDF. The file might be corrupted, password protected, or unsupported.", "fa-circle-xmark");
+          if (state.uploadedFiles.length === 0) {
+            welcomePlaceholder.classList.remove('hidden');
+            pdfViewerContainer.classList.add('hidden');
+          } else {
+            // Restore previous active file page
+            selectActiveFile(state.activeFileIndex);
+          }
         } finally {
           pdfLoadingSpinner.classList.add('hidden');
+          // Reset file input value to allow uploading the same file again if deleted
+          pdfFileInput.value = '';
         }
       };
+      
       fileReader.readAsArrayBuffer(file);
     }
 
-    // PDF Text Extraction Function
-    async function extractTextFromPdf(pdf) {
-      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        const page = await pdf.getPage(pageNum);
-        const textContent = await page.getTextContent();
-        let pageStr = '';
-        textContent.items.forEach(item => {
-          pageStr += item.str + ' ';
-        });
-        state.pdfPagesText.push({
-          pageIndex: pageNum,
-          text: pageStr
-        });
-        state.pdfTextContent += `\n[PAGE ${pageNum} START]\n${pageStr}\n[PAGE ${pageNum} END]\n`;
+    // Page selector
+    function selectActiveFile(idx) {
+      if (idx < 0 || idx >= state.uploadedFiles.length) return;
+      state.activeFileIndex = idx;
+      state.currentPageNum = 1;
+      const fileObj = state.uploadedFiles[idx];
+      state.pdfDocument = fileObj.pdfDocument;
+      state.totalPageCount = fileObj.totalPageCount;
+      
+      headerFileCount.innerText = `${state.uploadedFiles.length} / 3`;
+      renderUploadedFilesList();
+      switchActiveView('pdf');
+      renderPdfPage(1);
+      enableChatInterfaceIfReady();
+    }
+
+    // Remove file
+    function removeUploadedFile(idx, event) {
+      event.stopPropagation(); // Prevent trigger click selectActiveFile
+      state.uploadedFiles.splice(idx, 1);
+      
+      if (state.uploadedFiles.length === 0) {
+        state.pdfDocument = null;
+        state.totalPageCount = 0;
+        state.activeFileIndex = -1;
+        headerFileCount.innerText = `0 / 3`;
+        renderUploadedFilesList();
+        switchActiveView('pdf');
+        enableChatInterfaceIfReady();
+      } else {
+        if (state.activeFileIndex >= state.uploadedFiles.length) {
+          state.activeFileIndex = state.uploadedFiles.length - 1;
+        }
+        selectActiveFile(state.activeFileIndex);
       }
+    }
+
+    // Render list of files
+    function renderUploadedFilesList() {
+      const section = document.getElementById('uploadedFilesSection');
+      const list = document.getElementById('uploadedFilesList');
+      const badge = document.getElementById('fileCountBadge');
+      
+      if (state.uploadedFiles.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+      
+      section.classList.remove('hidden');
+      badge.innerText = `${state.uploadedFiles.length} / 3`;
+      list.innerHTML = '';
+      
+      state.uploadedFiles.forEach((file, idx) => {
+        const isActive = idx === state.activeFileIndex;
+        const container = document.createElement('div');
+        container.className = `flex items-center justify-between p-2.5 rounded-xl border transition-all cursor-pointer ${
+          isActive 
+            ? 'border-teal-500/50 bg-teal-500/10 text-teal-300' 
+            : 'border-slate-800 bg-slate-900/60 hover:bg-slate-800/40 text-slate-450 hover:text-slate-200'
+        }`;
+        
+        container.onclick = () => selectActiveFile(idx);
+        
+        container.innerHTML = `
+          <div class="flex items-center gap-2 overflow-hidden mr-2">
+            <i class="fa-solid fa-file-pdf shrink-0 ${isActive ? 'text-teal-400' : 'text-slate-500'}"></i>
+            <span class="text-xs font-semibold truncate" title="${file.name}">${file.name}</span>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-850 text-slate-400">${file.totalPageCount}p</span>
+            <button onclick="removeUploadedFile(${idx}, event)" class="text-slate-500 hover:text-red-400 transition-colors p-1" title="Remove PDF">
+              <i class="fa-solid fa-trash-can text-[10px]"></i>
+            </button>
+          </div>
+        `;
+        
+        list.appendChild(container);
+      });
+    }
+
+    // Combine loaded texts
+    function updateCombinedTextContent() {
+      let combined = '';
+      state.uploadedFiles.forEach((file, idx) => {
+        combined += `\n\n=== DOCUMENT ${idx + 1}: ${file.name} ===\n`;
+        combined += file.textContent;
+      });
+      return combined;
     }
 
     // Page Renderer
@@ -700,20 +920,51 @@
       }
     }
 
+    // View switcher
+    function switchActiveView(viewName) {
+      state.activeView = viewName;
+      
+      pdfViewerContainer.classList.add('hidden');
+      riskMapContainer.classList.add('hidden');
+      presentationContainer.classList.add('hidden');
+      welcomePlaceholder.classList.add('hidden');
+      
+      if (state.uploadedFiles.length === 0) {
+        welcomePlaceholder.classList.remove('hidden');
+        return;
+      }
+      
+      if (viewName === 'pdf') {
+        pdfViewerContainer.classList.remove('hidden');
+      } else if (viewName === 'mindmap') {
+        riskMapContainer.classList.remove('hidden');
+      } else if (viewName === 'presentation') {
+        presentationContainer.classList.remove('hidden');
+      }
+      
+      updateNavigationControls();
+    }
+
     // Adjust control buttons
     function updateNavigationControls() {
+      pdfControls.classList.add('hidden');
+      backToPdfBtn.classList.add('hidden');
+      
+      if (state.uploadedFiles.length === 0) return;
+
       if (state.activeView === 'pdf') {
         pdfControls.classList.remove('hidden');
-        backToPdfBtn.classList.add('hidden');
-        workspaceBadge.innerHTML = `<i class="fa-solid fa-file-pdf"></i> PDF Live Document`;
+        workspaceBadge.innerHTML = `<i class="fa-solid fa-file-pdf text-blue-400"></i> PDF Live Document`;
         
         prevPageBtn.disabled = state.currentPageNum <= 1;
         nextPageBtn.disabled = state.currentPageNum >= state.totalPageCount;
         pageProgress.innerText = `Page ${state.currentPageNum} / ${state.totalPageCount}`;
-      } else {
-        pdfControls.classList.add('hidden');
+      } else if (state.activeView === 'mindmap') {
         backToPdfBtn.classList.remove('hidden');
-        workspaceBadge.innerHTML = `<i class="fa-solid fa-diagram-project"></i> Dynamic Risk Mindmap`;
+        workspaceBadge.innerHTML = `<i class="fa-solid fa-diagram-project text-teal-400"></i> Dynamic Risk Mindmap`;
+      } else if (state.activeView === 'presentation') {
+        backToPdfBtn.classList.remove('hidden');
+        workspaceBadge.innerHTML = `<i class="fa-solid fa-person-chalkboard text-emerald-450"></i> Contract Presentation`;
       }
     }
 
@@ -730,68 +981,10 @@
       }
     });
 
-    // --- AGENTIC THOUGHT ANIMATOR ---
-    const thoughtsList = {
-      redflags: [
-        "Consulting executive risk profiles...",
-        "Scanning entire text context for restrictive covenants...",
-        "Verifying indemnification caps and uncapped structural clauses...",
-        "Evaluating termination-for-convenience clauses without parity...",
-        "Filtering key terms regarding governance laws and unilateral revisions..."
-      ],
-      obligations: [
-        "Ingesting contract framework...",
-        "Isolating operational milestone deadlines & monetary payment dates...",
-        "Tracing mutual notifications, renewals, and expiration rules...",
-        "Aggregating deliverable requirements & service-level standards..."
-      ],
-      jargon: [
-        "Unpacking legal jargon & high complexity boilerplate language...",
-        "Rewriting 'joint and several liability' and 'indemnification' in clear terms...",
-        "Mapping legal provisions into functional executive summaries..."
-      ],
-      remediation: [
-        "Synthesizing asymmetrical liability areas...",
-        "Drafting protective legal overrides & compromise revisions...",
-        "Ensuring parity and balancing liability caps on our behalf..."
-      ],
-      strategy: [
-        "Calculating fallback positions & negotiation tactics...",
-        "Formulating pushback scripts for hard clauses...",
-        "Drafting concession lists and executive talking points..."
-      ],
-      chat: [
-        "Analyzing specific conversational query parameters...",
-        "Cross-referencing liability sections in uploaded text scope...",
-        "Running strict Zero-Hallucination contextual filtering...",
-        "Finding verifiable section targets to build correct citations..."
-      ],
-      mindmap: [
-        "Initiating dynamic structural mindmap mapping sequence...",
-        "Parsing primary contracting counter-parties...",
-        "Extracting core financial risks, liabilities, and expiration dates...",
-        "Structuring geometric SVG node-link components..."
-      ]
-    };
-
-    function startThoughtProcess(actionType) {
-      thoughtProcessBubble.classList.remove('hidden');
-      const thoughts = thoughtsList[actionType] || thoughtsList.chat;
-      let i = 0;
-      
-      thoughtProcessText.innerText = thoughts[i];
-      clearInterval(state.thoughtInterval);
-      
-      state.thoughtInterval = setInterval(() => {
-        i = (i + 1) % thoughts.length;
-        thoughtProcessText.innerText = thoughts[i];
-      }, 2500);
-    }
-
-    function stopThoughtProcess() {
-      clearInterval(state.thoughtInterval);
-      thoughtProcessBubble.classList.add('hidden');
-    }
+    // Back to document
+    backToPdfBtn.addEventListener('click', () => {
+      switchActiveView('pdf');
+    });
 
     // --- CHAT INTERACTION WORKFLOW ---
     chatForm.addEventListener('submit', async (e) => {
@@ -811,15 +1004,15 @@
       
       let avatar, title, label, bubbleClass;
       if (sender === 'user') {
-        avatar = `<div class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 shrink-0 border border-gray-700"><i class="fa-solid fa-user text-xs"></i></div>`;
+        avatar = `<div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 shrink-0 border border-slate-700"><i class="fa-solid fa-user text-xs"></i></div>`;
         title = "Executive Client";
         label = "";
-        bubbleClass = "bg-gray-800 text-gray-200";
+        bubbleClass = "bg-slate-800 text-slate-200";
       } else {
-        avatar = `<div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500 shrink-0"><i class="fa-solid fa-user-shield text-sm"></i></div>`;
+        avatar = `<div class="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shrink-0"><i class="fa-solid fa-user-shield text-sm"></i></div>`;
         title = "LEGALEYE AGENT";
-        label = `<span class="text-[9px] font-bold tracking-wider px-1 bg-red-500/20 text-red-400 rounded">SENIOR</span>`;
-        bubbleClass = "bg-legalDark/80 border border-gray-800 text-gray-300";
+        label = `<span class="text-[9px] font-bold tracking-wider px-1.5 py-0.5 bg-teal-500/20 text-teal-400 rounded uppercase">Counsel</span>`;
+        bubbleClass = "bg-legalDark/80 border border-slate-800 text-slate-350";
       }
 
       const formattedText = formatLegalResponseText(text);
@@ -831,7 +1024,7 @@
             <span class="text-xs font-extrabold text-white">${title}</span>
             ${label}
           </div>
-          <div class="${bubbleClass} p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed space-y-1 shadow-sm">
+          <div class="${bubbleClass} p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed space-y-2 shadow-sm">
             ${formattedText}
           </div>
         </div>
@@ -849,14 +1042,16 @@
       formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
       
       formatted = formatted.split('\n').map(line => {
-        if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
-          return `<li class="ml-4 list-disc text-gray-300 mt-1">${line.substring(2)}</li>`;
+        const trimmed = line.trim();
+        if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+          return `<li class="ml-4 list-disc text-slate-300 mt-1">${trimmed.substring(2)}</li>`;
         }
         return line;
       }).join('\n');
 
-      formatted = formatted.replace(/\[Page (\d+), Section ([^\]]+)\]/gi, 
-        '<span class="inline-flex items-center px-2 py-0.5 mt-1 mr-1 text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500/30 rounded"><i class="fa-solid fa-bookmark mr-1 text-[9px]"></i> Page $1, Sec $2</span>'
+      // Citation formatter matches: [Page X, Section Y] or [File Name: X, Page Y, Section Z]
+      formatted = formatted.replace(/\[([^\]]*?Page \d+[^\]]*?)\]/gi, 
+        '<span class="inline-flex items-center px-2 py-0.5 mt-1 mr-1 text-[10px] font-extrabold bg-teal-500/20 text-teal-355 border border-teal-500/30 rounded shadow-sm"><i class="fa-solid fa-bookmark mr-1 text-[9px]"></i> $1</span>'
       );
 
       return formatted;
@@ -865,16 +1060,16 @@
     clearChatBtn.addEventListener('click', () => {
       chatMessageFlow.innerHTML = `
         <div class="flex items-start gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500 shrink-0">
+          <div class="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shrink-0">
             <i class="fa-solid fa-user-shield text-sm"></i>
           </div>
           <div class="space-y-1">
             <div class="flex items-center gap-1.5">
               <span class="text-xs font-extrabold text-white">LEGALEYE AGENT</span>
-              <span class="text-[9px] font-bold tracking-wider px-1 bg-red-500/20 text-red-400 rounded">SENIOR</span>
+              <span class="text-[9px] font-bold tracking-wider px-1.5 py-0.5 bg-teal-500/20 text-teal-400 rounded uppercase">Counsel</span>
             </div>
-            <div class="bg-legalDark/80 p-3 rounded-2xl rounded-tl-none border border-gray-800 text-xs text-gray-300 leading-relaxed">
-              <p>Chat cleared. I'm ready for new analysis directives on this contract.</p>
+            <div class="bg-legalDark/80 p-3 rounded-2xl rounded-tl-none border border-slate-800 text-xs text-slate-300 leading-relaxed">
+              <p>Chat cleared. I'm ready for new analysis directives on these documents.</p>
             </div>
           </div>
         </div>
@@ -885,8 +1080,7 @@
     // --- GEMINI INFERENCE ENGINE (WITH EXPONENTIAL BACKOFF) ---
     async function callGeminiApiWithRetry(prompt, systemInstruction = '', responseSchema = null, retries = 5, delay = 1000) {
       const apiKey = state.apiKey;
-      // Stable production endpoint using gemini-1.5-flash-001
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
       const payload = {
         contents: [{ parts: [{ text: prompt }] }]
@@ -942,170 +1136,273 @@
       }
     }
 
+    // --- AGENTIC DECISION ROUTER ---
+    const routerSystemPrompt = `You are the decision router for an Agentic Contract Analyzer.
+Given a user query, decide which workflow tool to trigger.
+Respond ONLY with a JSON object in this format (no markdown code blocks, no other text):
+{
+  "thought": "Brief explanation of what the user wants and which tool is appropriate",
+  "tool": "READ_DOCS" | "GENERATE_MINDMAP" | "CREATE_PRESENTATION" | "STANDARD_CHAT",
+  "status_updates": ["Step 1 description...", "Step 2 description...", "Step 3 description..."]
+}
+
+Available tools:
+- READ_DOCS: Use when the user asks a question about the contract text details, obligations, liabilities, or specific clauses.
+- GENERATE_MINDMAP: Use when the user explicitly requests a mind map, visual diagram, concept graph, or structured relationship chart.
+- CREATE_PRESENTATION: Use when the user requests a presentation, slide deck, PowerPoint, or slide-based summary of the contract key terms.
+- STANDARD_CHAT: Use for general greetings, general help questions, or queries that do not relate to the document (e.g., jokes, weather).
+
+status_updates is an array of 3 descriptive stages (short strings, e.g. ["Analyzing query...", "Extracting contract dates...", "Compiling map nodes..."]) to show in the UI thought bubble while executing.`;
+
+    async function routeUserQuery(query) {
+      if (!state.isApiConnected) {
+        return { tool: "STANDARD_CHAT", status_updates: ["Routing query..."] };
+      }
+      try {
+        const responseSchema = {
+          type: "OBJECT",
+          properties: {
+            thought: { type: "STRING" },
+            tool: { type: "STRING", enum: ["READ_DOCS", "GENERATE_MINDMAP", "CREATE_PRESENTATION", "STANDARD_CHAT"] },
+            status_updates: { type: "ARRAY", items: { type: "STRING" } }
+          },
+          required: ["thought", "tool", "status_updates"]
+        };
+        const resText = await callGeminiApiWithRetry(query, routerSystemPrompt, responseSchema);
+        return JSON.parse(resText.trim());
+      } catch (err) {
+        console.error("Router error, fallback to keywords:", err);
+        const lower = query.toLowerCase();
+        if (lower.includes("mind") || lower.includes("map") || lower.includes("graph") || lower.includes("diagram")) {
+          return { tool: "GENERATE_MINDMAP", status_updates: ["Recognized mind map request...", "Structuring nodes...", "Rendering SVG..."] };
+        } else if (lower.includes("presentation") || lower.includes("slide") || lower.includes("ppt")) {
+          return { tool: "CREATE_PRESENTATION", status_updates: ["Recognized slide request...", "Generating slide concepts...", "Structuring layout..."] };
+        }
+        return { tool: "READ_DOCS", status_updates: ["Analyzing query...", "Scanning contract text...", "Checking citations..."] };
+      }
+    }
+
     // --- AGENT INTERPRETATION PIPELINE ---
     async function handleAgentResponse(query) {
       if (!state.isApiConnected) {
         showToast("Key Disconnected", "Please input & connect a valid Gemini API key.", "fa-plug");
         return;
       }
+      if (state.uploadedFiles.length === 0) {
+        showToast("No Document Uploaded", "Please upload at least one PDF contract before chatting.", "fa-file-pdf");
+        return;
+      }
 
-      startThoughtProcess('chat');
+      // Disable inputs
+      chatInput.disabled = true;
+      sendChatBtn.disabled = true;
 
-      const systemPrompt = `You are a Senior Legal Assistant acting as expert Executive Counsel.
-You are given the extracted text content of a legal contract.
-Strict Rule: Act strictly as a Senior Legal Assistant. Every single answer or statement of fact MUST include a citation formatted exactly as [Page X, Section Y]. 
-If the information is not in the document, you must reply: "Information not found in the provided text". Absolutely NO hallucinations are allowed. 
-Reference only the facts present in the text below:
---------------------
-${state.pdfTextContent}
---------------------`;
+      // 1. Show routing status
+      thoughtProcessBubble.classList.remove('hidden');
+      thoughtProcessText.innerText = "Routing agentic workflow...";
+      
+      let route;
+      try {
+        route = await routeUserQuery(query);
+      } catch (err) {
+        route = { tool: "READ_DOCS", status_updates: ["Analyzing query...", "Reading contract...", "Verifying citations..."] };
+      }
+
+      // 2. Play the status updates sequence
+      let statusIdx = 0;
+      thoughtProcessText.innerText = route.status_updates[0] || "Executing tool...";
+      const statusInterval = setInterval(() => {
+        statusIdx++;
+        if (statusIdx < route.status_updates.length) {
+          thoughtProcessText.innerText = route.status_updates[statusIdx];
+        }
+      }, 1000);
+
+      const stopWorkflow = () => {
+        clearInterval(statusInterval);
+        thoughtProcessBubble.classList.add('hidden');
+        chatInput.disabled = false;
+        sendChatBtn.disabled = false;
+        chatInput.focus();
+      };
 
       try {
-        const result = await callGeminiApiWithRetry(query, systemPrompt);
-        stopThoughtProcess();
-        appendMessage(result || "Error processing prompt. No response generated.", 'agent');
+        if (route.tool === 'READ_DOCS') {
+          const combinedText = updateCombinedTextContent();
+          const systemPrompt = `You are a Senior Legal Assistant acting as expert Executive Counsel.
+You are given the text of ${state.uploadedFiles.length} uploaded legal contract documents.
+Strict Rule: Act strictly as a Senior Legal Assistant (Executive Legal Counsel). Reject all unrelated questions (such as jokes, general trivia, code help, etc.) politely but firmly, explaining that your scope is strictly limited to reviewing the uploaded documents.
+Every single answer or statement of fact MUST include a citation indicating the file name and page/section it was pulled from (e.g., "[File Name: contract.pdf, Page 3, Sec 4.2]" or "[Page 2, Section 3]").
+If the information is not in the document, you must reply: "Information not found in the provided text". Absolutely NO hallucinations are allowed.
+Reference only the facts present in the text below:
+--------------------
+${combinedText}
+--------------------`;
+          const answer = await callGeminiApiWithRetry(query, systemPrompt);
+          stopWorkflow();
+          appendMessage(answer || "No response generated.", 'agent');
+
+        } else if (route.tool === 'GENERATE_MINDMAP') {
+          // Trigger mind map logic
+          switchActiveView('mindmap');
+          svgCanvasWrapper.innerHTML = `
+            <div class="absolute inset-0 bg-legalPanel/90 flex flex-col items-center justify-center text-center p-6 z-10">
+              <div class="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <h3 class="text-sm font-bold text-gray-200">Generating interactive mind map nodes...</h3>
+            </div>
+          `;
+          
+          const combinedText = updateCombinedTextContent();
+          const systemInstruction = `You are a legal document analyzer. Parse the contract text and return a simple diagram output.
+Output ONLY lines starting with either NODE: or EDGE: matching the exact rules below. Do not output markdown, codeblocks, html, or conversation.
+
+Format rules:
+NODE: id | label | subtitle | class
+Where "class" MUST be one of: root, party, liability-high, liability-med, liability-low, date
+EDGE: from_id -> to_id
+
+Example:
+NODE: root | Non-Disclosure Agreement | Core Contract Agreement | root
+NODE: p1 | Acme Corp | Disclosing Party | party
+NODE: p2 | Wiley Ventures | Receiving Party | party
+NODE: r1 | Uncapped Indemnity | High Risk Liability | liability-high
+NODE: d1 | Notice Period | 30 Days Prior | date
+EDGE: root -> p1
+EDGE: root -> p2
+EDGE: root -> r1
+EDGE: root -> d1`;
+
+          const prompt = `Convert the contract text into custom NODE/EDGE format identifying core contract name (root), parties, main liability limits (high, med, or low risks), and key target timelines/dates.
+Text Content:
+${combinedText}`;
+
+          const textResult = await callGeminiApiWithRetry(prompt, systemInstruction);
+          const mapData = parseNodeEdgeText(textResult);
+          renderInteractiveMindMap(mapData);
+          stopWorkflow();
+          appendMessage("I have analyzed the documents and generated an interactive **Risk Mind Map** in the center panel. You can zoom, pan, and click on nodes to inspect key details.", 'agent');
+
+        } else if (route.tool === 'CREATE_PRESENTATION') {
+          // Trigger presentation slide generation
+          switchActiveView('presentation');
+          slideContentWrapper.innerHTML = `
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              <p class="text-xs text-slate-350 font-semibold tracking-wider">Generating slides...</p>
+            </div>
+          `;
+          
+          const combinedText = updateCombinedTextContent();
+          const systemInstruction = `You are a legal slide designer. Analyze the contract text and generate a structural presentation summarizing it.
+Output ONLY a JSON array of slide objects. Do not write markdown, code blocks, or other text.
+Each slide object MUST have the following structure:
+{
+  "title": "Slide Title (short, high-impact)",
+  "bullets": [
+    "Bullet point 1 detailing a key term or insight",
+    "Bullet point 2 with page/section citation",
+    "Bullet point 3 details"
+  ]
+}
+Generate exactly 5 slides summarizing:
+1. Executive Overview & Core Parties
+2. Key Deliverables & Obligations
+3. Top Liability & Risk Exposure Areas
+4. Important Dates, Deadlines & Renewals
+5. Strategic Negotiation Recommendations & Fallbacks`;
+
+          const prompt = `Generate a slide deck summarizing the key terms of the uploaded contract(s).
+Text Content:
+${combinedText}`;
+
+          const responseSchema = {
+            type: "ARRAY",
+            items: {
+              type: "OBJECT",
+              properties: {
+                title: { type: "STRING" },
+                bullets: { type: "ARRAY", items: { type: "STRING" } }
+              },
+              required: ["title", "bullets"]
+            }
+          };
+
+          const textResult = await callGeminiApiWithRetry(prompt, systemInstruction, responseSchema);
+          const slides = JSON.parse(textResult.trim());
+          state.presentationSlides = slides;
+          state.currentSlideNum = 0;
+          
+          // Restore slide content wrapper nodes
+          slideContentWrapper.innerHTML = `
+            <h2 id="slideTitle" class="text-xl font-bold text-white tracking-tight bg-gradient-to-r from-blue-400 to-teal-300 bg-clip-text text-transparent"></h2>
+            <ul id="slideBullets" class="text-left text-xs text-slate-350 space-y-3.5 max-w-lg mx-auto"></ul>
+          `;
+          
+          renderPresentationSlide();
+          stopWorkflow();
+          appendMessage("I have created a **Presentation Slide Deck** summarizing the contract terms in the center workspace. Use the slide controls at the top of the workspace to navigate.", 'agent');
+
+        } else {
+          // STANDARD_CHAT or fallback
+          const systemPrompt = `You are a Senior Legal Assistant acting as expert Executive Counsel.
+Strict Rule: Act strictly as a Senior Legal Assistant (Executive Legal Counsel). Reject all unrelated questions (such as jokes, general trivia, code help, etc.) politely but firmly, explaining that your scope is strictly limited to reviewing the uploaded documents.
+Do not hallucinate and focus on the legal contract analysis role.`;
+          const answer = await callGeminiApiWithRetry(query, systemPrompt);
+          stopWorkflow();
+          appendMessage(answer || "No response generated.", 'agent');
+        }
       } catch (err) {
         console.error(err);
-        stopThoughtProcess();
-        appendMessage(`Failure interacting with the AI Reasoning Engine. Details: ${err.message}`, 'agent');
-        showToast("Reasoning Fault", err.message || "An error occurred with Gemini call.", "fa-triangle-exclamation");
+        stopWorkflow();
+        appendMessage(`An error occurred while executing the agentic workflow: ${err.message}`, 'agent');
+        showToast("Workflow Error", err.message || "An error occurred with Gemini call.", "fa-triangle-exclamation");
       }
     }
 
     // --- QUICK ACTION HANDLERS ---
     const quickActions = document.querySelectorAll('.quick-action-btn');
     quickActions.forEach(btn => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', () => {
         const actionType = btn.getAttribute('data-action');
-        if (!state.pdfDocument) {
-          showToast("Document Missing", "Please upload a contract PDF before calling risk actions.", "fa-file-signature");
-          return;
-        }
-        if (!state.isApiConnected) {
-          showToast("Key Disconnected", "Please input & connect a valid Gemini API key in the header.", "fa-plug");
-          return;
-        }
-
-        let userInstructionText = '';
-        let targetPrompt = '';
-        if (actionType === 'redflags') {
-          userInstructionText = "Expose contract red flags, liabilities & high risks.";
-          targetPrompt = "Identify all active red flags, liabilities, or risk exposures inside the contract text. Highlight items that appear asymmetrical or carry excessive financial risk. Every red flag must include page and section citations formatted exactly as [Page X, Section Y].";
-        } else if (actionType === 'obligations') {
-          userInstructionText = "Summarize contract obligations, deadlines, and key terms.";
-          targetPrompt = "Provide a comprehensive list of all critical commitments, operational deadlines, payment periods, and active obligations. For each obligation, list who holds the obligation and cite the source as [Page X, Section Y].";
-        } else if (actionType === 'jargon') {
-          userInstructionText = "Deconstruct and simplify legal jargon into clear business terms.";
-          targetPrompt = "Isolate complex legal jargon phrases (such as indemnities, face majeure, standard liabilities, waivers, or assignments) found in this contract. Translate them into plain business English so an executive can comprehend them instantly. Cite the section as [Page X, Section Y].";
-        } else if (actionType === 'remediation') {
-          userInstructionText = "Draft protective remediation counter-clauses.";
-          targetPrompt = "Identify the top 3 most asymmetrical or high-risk liability/indemnification clauses in the contract. For each, draft a balanced, defensive remediation counter-proposal clause that protects our company. Explain the legal objective of each rewrite, and cite the source clause as [Page X, Section Y].";
-        } else if (actionType === 'strategy') {
-          userInstructionText = "Compile tactical negotiation battlebook scripts.";
-          targetPrompt = "Examine the contract's terms and output a strategic negotiation Battlebook. Highlight potential counterparty objections, tactical concession guides, and exact verbal pushback scripts to push back on unbalanced clauses. Cite corresponding contract sections as [Page X, Section Y].";
-        }
-
-        appendMessage(userInstructionText, 'user');
-        startThoughtProcess(actionType);
-        
-        const systemPrompt = `You are a Senior Legal Assistant. Analyze the contract text with strict adherence to facts.
-If any target detail is not clearly identified, do not hallucinate, declare "Information not found in the provided text".
-Every claim must end with a [Page X, Section Y] citation.
---------------------
-${state.pdfTextContent}
---------------------`;
-
-        try {
-          const result = await callGeminiApiWithRetry(targetPrompt, systemPrompt);
-          stopThoughtProcess();
-          appendMessage(result || "Unable to extract items.", 'agent');
-        } catch (err) {
-          console.error(err);
-          stopThoughtProcess();
-          appendMessage(`An issue occurred during quick analysis: ${err.message}`, 'agent');
-        }
+        triggerQuickAction(actionType);
       });
     });
 
-    // --- FASTER & MORE ROBUST MIND MAP GENERATOR (TEXT NODE/EDGE BASED) ---
-    generateRiskMapBtn.addEventListener('click', async () => {
-      if (!state.pdfDocument) {
-        showToast("Upload Required", "Please upload a contract PDF before generating a risk mind map.", "fa-file-signature");
+    // Chat pill buttons click listener
+    const chatPills = document.querySelectorAll('.chat-pill-btn');
+    chatPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const actionType = pill.getAttribute('data-pill');
+        triggerQuickAction(actionType);
+      });
+    });
+
+    async function triggerQuickAction(actionType) {
+      if (state.uploadedFiles.length === 0) {
+        showToast("Upload Required", "Please upload a contract PDF before calling risk actions.", "fa-file-signature");
         return;
       }
       if (!state.isApiConnected) {
-        showToast("Key Disconnected", "Please verify and link your Gemini API key.", "fa-plug");
+        showToast("Key Disconnected", "Please input & connect a valid Gemini API key in the chat header.", "fa-plug");
         return;
       }
 
-      state.activeView = 'mindmap';
-      updateNavigationControls();
-      pdfViewerContainer.classList.add('hidden');
-      riskMapContainer.classList.remove('hidden');
-
-      svgCanvasWrapper.innerHTML = `
-        <div class="absolute inset-0 bg-legalPanel/90 flex flex-col items-center justify-center text-center p-6 z-10">
-          <div class="w-16 h-16 bg-red-500/10 border border-red-500/20 rounded-full flex items-center justify-center text-red-500 text-2xl mb-4 animate-spin">
-            <i class="fa-solid fa-spinner"></i>
-          </div>
-          <h3 class="text-sm font-bold text-gray-200">Mapping Contract Hierarchy Structure...</h3>
-          <p id="mindmapStatus" class="text-xs text-gray-500 mt-1 max-w-sm">Generating lightweight custom-token map visualization elements via Gemini...</p>
-        </div>
-      `;
-
-      startThoughtProcess('mindmap');
-
-      const systemInstruction = `You are a legal document analyzer. Parse the contract text and return a simple diagram output.
-      Output ONLY lines starting with either NODE: or EDGE: matching the exact rules below. Do not output markdown, codeblocks, html, or conversation.
-      
-      Format rules:
-      NODE: id | label | subtitle | class
-      Where "class" MUST be one of: root, party, liability-high, liability-med, liability-low, date
-      EDGE: from_id -> to_id
-      
-      Example:
-      NODE: root | Non-Disclosure Agreement | Core Contract Agreement | root
-      NODE: p1 | Acme Corp | Disclosing Party | party
-      NODE: p2 | Wiley Ventures | Receiving Party | party
-      NODE: r1 | Uncapped Indemnity | High Risk Liability | liability-high
-      NODE: d1 | Notice Period | 30 Days Prior | date
-      EDGE: root -> p1
-      EDGE: root -> p2
-      EDGE: root -> r1
-      EDGE: root -> d1`;
-
-      const prompt = `Convert the following legal agreement into custom NODE/EDGE format identifying core contract name (root), parties, main liability limits (high, med, or low risks), and key target timelines/dates.
-      Text Content:
-      ${state.pdfTextContent}`;
-
-      try {
-        const textResult = await callGeminiApiWithRetry(prompt, systemInstruction);
-        const mapData = parseNodeEdgeText(textResult);
-        renderInteractiveMindMap(mapData);
-        showToast("Risk Map Ready", "Interactive Mind Map compiled successfully.", "fa-diagram-project", true);
-      } catch (err) {
-        console.error("Failed to generate mind map: ", err);
-        svgCanvasWrapper.innerHTML = `
-          <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-legalDark">
-            <i class="fa-solid fa-circle-exclamation text-red-500 text-3xl mb-3"></i>
-            <h4 class="text-sm font-bold text-gray-200">Visualization Extraction Fault</h4>
-            <p class="text-xs text-gray-500 mt-1 max-w-sm">The model struggled to generate correct structured custom tokens. Details: ${err.message}</p>
-            <button onclick="document.getElementById('generateRiskMapBtn').click();" class="mt-4 bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-lg">Retry Map Generation</button>
-          </div>
-        `;
-        showToast("Map Build Error", err.message || "Unable to construct node mapping.", "fa-circle-xmark");
-      } finally {
-        stopThoughtProcess();
+      let userInstructionText = '';
+      let targetPrompt = '';
+      if (actionType === 'redflags') {
+        userInstructionText = "Summarize contract red flags, liabilities & high risks.";
+        targetPrompt = "Identify all active red flags, liabilities, or risk exposures inside the contract text. Highlight items that appear asymmetrical or carry excessive financial risk. Every red flag must include page and section citations formatted exactly as [Page X, Section Y].";
+      } else if (actionType === 'obligations') {
+        userInstructionText = "List critical dates, deadlines, and milestones.";
+        targetPrompt = "Provide a comprehensive list of all critical commitments, operational deadlines, payment periods, renewals, and active obligations. List who holds the obligation and cite the source as [Page X, Section Y].";
+      } else if (actionType === 'jargon') {
+        userInstructionText = "Explain legal jargon in plain layman terms.";
+        targetPrompt = "Isolate complex legal jargon phrases (such as indemnities, force majeure, standard liabilities, waivers, or assignments) found in this contract. Translate them into plain business English so an executive can comprehend them instantly. Cite the section as [Page X, Section Y].";
       }
-    });
 
-    // Back to document
-    backToPdfBtn.addEventListener('click', () => {
-      state.activeView = 'pdf';
-      updateNavigationControls();
-      riskMapContainer.classList.add('hidden');
-      pdfViewerContainer.classList.remove('hidden');
-    });
+      appendMessage(userInstructionText, 'user');
+      await handleAgentResponse(targetPrompt);
+    }
 
     // --- NODE/EDGE PLAIN TEXT PARSER ---
     function parseNodeEdgeText(text) {
@@ -1160,7 +1457,7 @@ ${state.pdfTextContent}
       svg.setAttribute("width", "100%");
       svg.setAttribute("height", "100%");
       svg.setAttribute("id", "mindMapSvg");
-      svg.style.background = "#0B0F19";
+      svg.style.background = "#080C14";
       
       const containerG = document.createElementNS("http://www.w3.org/2000/svg", "g");
       containerG.setAttribute("id", "mindMapContainerG");
@@ -1169,11 +1466,8 @@ ${state.pdfTextContent}
 
       // Distribute coordinates based on node classifications radially
       const rootNode = data.nodes.find(n => n.class === 'root') || data.nodes[0];
-      
-      // Separate other nodes to assign positions smoothly
       const childNodes = data.nodes.filter(n => n.id !== rootNode.id);
       
-      // Radial or Cluster layout
       rootNode.x = 0;
       rootNode.y = 0;
 
@@ -1195,7 +1489,6 @@ ${state.pdfTextContent}
           node.y = -140 + (dateCount * 80);
           dateCount++;
         } else {
-          // Fallback placement
           node.x = -100 + Math.random() * 200;
           node.y = 150 + Math.random() * 100;
         }
@@ -1215,7 +1508,7 @@ ${state.pdfTextContent}
 
           const d = `M ${sourceNode.x} ${sourceNode.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${targetNode.x} ${targetNode.y}`;
           path.setAttribute("d", d);
-          path.setAttribute("stroke", "#1F2937");
+          path.setAttribute("stroke", "#1E293B");
           path.setAttribute("stroke-width", "2");
           path.setAttribute("fill", "none");
           containerG.appendChild(path);
@@ -1233,29 +1526,29 @@ ${state.pdfTextContent}
         });
 
         // Determine node styling based on classification
-        let color = '#111827';
-        let borderColor = '#374151';
+        let color = '#0F172A';
+        let borderColor = '#334155';
         let rx = '8';
         let rectW = 160;
         let rectH = 42;
 
         if (n.class === 'root') {
-          color = '#EF4444';
-          borderColor = '#F87171';
+          color = '#0D9488'; // Teal root
+          borderColor = '#14B8A6';
           rectW = 200;
           rectH = 50;
         } else if (n.class === 'liability-high') {
-          color = '#7F1D1D';
+          color = '#7F1D1D'; // Warning red
           borderColor = '#EF4444';
         } else if (n.class === 'liability-med') {
-          color = '#78350F';
+          color = '#78350F'; // Warning amber
           borderColor = '#F59E0B';
         } else if (n.class === 'liability-low') {
-          color = '#111827';
-          borderColor = '#10B981';
+          color = '#1E3A8A'; // Blue
+          borderColor = '#3B82F6';
         } else if (n.class === 'date') {
-          color = '#064E3B';
-          borderColor = '#10B981';
+          color = '#581C87'; // Purple dates
+          borderColor = '#A855F7';
         }
 
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -1330,6 +1623,50 @@ ${state.pdfTextContent}
     function truncateText(str, n) {
       return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
     }
+
+    // --- MIND MAP MANUAL TRIGGER ---
+    generateRiskMapBtn.addEventListener('click', () => {
+      handleAgentResponse("Generate a visual mind map of the contract key concepts.");
+    });
+
+    // --- PRESENTATION RENDER ---
+    function renderPresentationSlide() {
+      if (!state.presentationSlides || state.presentationSlides.length === 0) return;
+      const slide = state.presentationSlides[state.currentSlideNum];
+      
+      slideTitle.innerText = slide.title;
+      slideBullets.innerHTML = '';
+      
+      slide.bullets.forEach(bullet => {
+        const li = document.createElement('li');
+        li.className = "flex items-start gap-2.5 text-slate-350 text-xs md:text-sm";
+        const formatted = formatLegalResponseText(bullet);
+        li.innerHTML = `
+          <span class="text-teal-400 mt-1 shrink-0"><i class="fa-solid fa-circle-chevron-right text-xs"></i></span>
+          <span>${formatted}</span>
+        `;
+        slideBullets.appendChild(li);
+      });
+      
+      prevSlideBtn.disabled = state.currentSlideNum <= 0;
+      nextSlideBtn.disabled = state.currentSlideNum >= state.presentationSlides.length - 1;
+      slideProgress.innerText = `Slide ${state.currentSlideNum + 1} of ${state.presentationSlides.length}`;
+    }
+
+    // Presentation Slide Listeners
+    prevSlideBtn.addEventListener('click', () => {
+      if (state.currentSlideNum > 0) {
+        state.currentSlideNum--;
+        renderPresentationSlide();
+      }
+    });
+
+    nextSlideBtn.addEventListener('click', () => {
+      if (state.currentSlideNum < state.presentationSlides.length - 1) {
+        state.currentSlideNum++;
+        renderPresentationSlide();
+      }
+    });
   </script>
 </body>
 </html>
